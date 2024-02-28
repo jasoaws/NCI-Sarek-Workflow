@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudFormation to deploy the nf-core Sarek workflow
+Parameters:
+  wfUri:
+    Description: Workflow S3 URI, only change if you wish to use a different version of the workflow
+    Type: String
+    Default: "s3://enterprise-healthomics-workflows/sarek.zip"
+
+Resources:
+  SarekWorkflow:
+    Type: "AWS::Omics::Workflow"
+    Properties:
+      DefinitionUri: !Ref wfUri
+      Description: "nf-core/sarek"
+      Engine: "NEXTFLOW"
+      Main: "nf-core-sarek/main.nf"
+      Name: "cfn-nf-core-sarek"
+      StorageCapacity: 1200
+      ParameterTemplate:
+        input: 
+            Description: "S3 URI to samplesheet.csv. Rows therein point to S3 URIs for fastq data"
+        igenomes_base: 
+            Description: "URI base for iGenomes references. (e.g. s3://ngi-igenomes/igenomes/)"
+        genome: 
+            Description: "Name of iGenomes reference. - e.g. GATK.GRCh38"
+            Optional: true
+        tools: 
+            Description: "Tools to use for variant calling and/or for annotation."
+            Optional: true
+        split_fastq: 
+            Description: "Specify how many reads each split of a FastQ file contains. Set 0 to turn off splitting at all."
+            Optional: true
+        intervals: 
+            Description: "Path to target bed file in case of whole exome or targeted sequencing or intervals file."
+            Optional: true
+        wes: 
+            Description: "Enable when exome or panel data is provided."
+            Optional: true
+        nucleotides_per_second: 
+            Description: "Estimate interval size."
+            Optional: true
+        ecr_registry: 
+            Description: "Amazon ECR registry for container images (e.g. '<account-id>.dkr.ecr.<region>.amazonaws.com')"
+
+Outputs:
+  WorkflowArn:
+    Description: "ARN of workflow"
+    Value: !GetAtt Sarek.Arn
