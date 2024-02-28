@@ -46,4 +46,4 @@ Resources:
 Outputs:
   WorkflowArn:
     Description: "ARN of workflow"
-    Value: !GetAtt Sarek.Arn
+    Value: !GetAtt SarekWorkflow.Arn
