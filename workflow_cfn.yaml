@@ -41,7 +41,7 @@ Resources:
             Description: "Estimate interval size."
             Optional: true
         ecr_registry: 
-            Description: "Amazon ECR registry for container images (e.g. '<account-id>.dkr.ecr.<region>.amazonaws.com')"
+            Description: "Amazon ECR registry for container images (e.g. '<account-id>.dkr.ecr.<region>.amazonaws.com')."
 
 Outputs:
   WorkflowArn:
