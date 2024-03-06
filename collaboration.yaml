@@ -2,8 +2,71 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: >
   CloudFormation to deploy the collaboration environment
 
+Parameters:
+  ConnectionArn:
+    Type: String
+    Description: The code star connection arn
+
 Resources:
-  MyBucket:
-    Type: AWS::S3::Bucket
+  # finops service catalog product
+  FinOpsProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
     Properties:
-      BucketName: bucketname-{AWS::AccountId}-{AWS::Region}
+      Name: "FinOpsProduct"
+      Owner: "arpah"
+      Description: "Arpa-h FinOps Solution"
+      SourceConnection:
+          ConnectionParameters: 
+              CodeStar: 
+                  ArtifactPath: sc-example/finops_cfn.yaml
+                  Branch: Main
+                  ConnectionArn: !Ref ConnectionArn
+                  Repository: sc-exmaple
+          Type: CODESTAR
+      Tags:
+        - Key: "Name"
+          Value: "FinOpsProduct"
+        - Key: "Version"
+          Value: "1.0"
+  FinOpsProvisionedProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProvisionedProduct
+    DependsOn: FinOpsProduct
+    Properties:
+      ProductName: !Ref FinOpsProduct
+      ProvisioningArtifactName: "1.0"
+  WorkflowsPortfolio:
+    Type: AWS::ServiceCatalog::Portfolio
+    Properties:
+      DisplayName: "Workflows"
+      ProviderName: "Arpa-h"
+      Description: "Arpa-h Workflows"
+      Tags:
+        - Key: "Name"
+          Value: "Workflows"
+        - Key: "Version"
+          Value: "1.0"
+  WorkflowProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: "WorkflowProduct"
+      Owner: "arpah"
+      Description: "Arpa-h Workflow Solution"
+      SourceConnection:
+          ConnectionParameters: 
+              CodeStar: 
+                  ArtifactPath: sc-example/workflow_cfn.yaml
+                  Branch: Main
+                  ConnectionArn: !Ref ConnectionArn
+                  Repository: sc-exmaple
+          Type: CODESTAR
+      Tags:
+        - Key: "Name"
+          Value: "WorkflowProduct"
+        - Key: "Version"
+          Value: "1.0"
+  WorkflowProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      AcceptLanguage: "en"
+      PortfolioId: !Ref WorkflowsPortfolio
+      ProductId: !Ref WorkflowProduct

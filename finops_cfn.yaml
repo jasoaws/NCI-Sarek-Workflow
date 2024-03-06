@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudFormation to deploy the collaboration environment
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "arpah-${AWS::AccountId}-finops"
+      AccessControl: Private
+      Tags:
+        - Key: "Name"
+          Value: "FinOpsBucket"
+        - Key: "Version"
+          Value: "1.0"
