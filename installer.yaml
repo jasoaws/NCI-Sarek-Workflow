@@ -1,10 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >
-  CloudFormation to deploy the nf-core Sarek workflow
-
-Parameters:
-  
-
+  CloudFormation to deploy the arpa-h collaboration installer
 Resources:
   #code start connection
   Connection:
