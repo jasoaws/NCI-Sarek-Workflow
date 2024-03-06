@@ -7,7 +7,7 @@ Resources:
     Type: AWS::CodeStarConnections::Connection
     Properties:
       ConnectionName: Arpa-Code-Connection
-      ProviderType: Github
+      ProviderType: GitHub
       Tags: 
         - Key: Name
           Value: Arpa-Connection
@@ -41,6 +41,11 @@ Resources:
           Value: "CollaborationProduct"
         - Key: "Version"
           Value: "1.0"
+    CollaborationProductProvision:
+      Type: AWS::ServiceCatalog::CloudFormationProvisionedProduct
+      Properties:
+        ProductName: !Ref CollaborationProduct
+        ProvisioningArtifactName: "1.0"
 
   #service catalog product
 
