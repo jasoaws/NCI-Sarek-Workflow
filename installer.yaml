@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudFormation to deploy the nf-core Sarek workflow
+
+Parameters:
+  
+
+Resources:
+  #code start connection
+  Connection:
+    Type: AWS::CodeStarConnections::Connection
+    Properties:
+      ConnectionName: Arpa-Code-Connection
+      ProviderType: Github
+      Tags: 
+        - Key: Name
+          Value: Arpa-Connection
+        - Key: Version
+          Value: 1.0
+
+  # RespositorySync:
+  #   Type: AWS::CodeStarConnections::RepositoryLink
+  #   Properties:
+  #     ConnectionArn: !GetAtt CodeStarConnection.ConnectionArn
+  #     OwnerId: "jasoaws"
+  #     RepositoryName: "sc-exmaple"
+
+  #resource lync
+  CollaborationProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: "CollaborationProduct"
+      Owner: "jasoaws"
+      Description: "Arpa-h Collaboration Environment"
+      SourceConnection:
+          ConnectionParameters: 
+              CodeStar: 
+                  ArtifactPath: sc-example/collaboration.yaml
+                  Branch: Main
+                  ConnectionArn: !GetAtt Connection.ConnectionArn
+                  Repository: sc-exmaple
+          Type: Codestar
+      Tags:
+        - Key: "Name"
+          Value: "CollaborationProduct"
+        - Key: "Version"
+          Value: "1.0"
+
+  #service catalog product
+
+  #service catalog subscription
+
