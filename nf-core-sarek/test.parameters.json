@@ -1,0 +1,9 @@
+{
+    "input": "{{staging_uri}}/samplesheet.csv",
+    "igenomes_base": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-sarek/igenomes/",
+    "genome": "GATK.GRCh38",
+    "tools": "strelka,freebayes,haplotypecaller,deepvariant,manta,tiddit,cnvkit",
+    "split_fastq": 50000000,
+    "nucleotides_per_second": 100000,
+    "ecr_registry": "{{ecr_registry}}"
+}

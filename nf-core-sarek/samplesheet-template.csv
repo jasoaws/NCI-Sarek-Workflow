@@ -1,0 +1,2 @@
+patient,status,sample,lane,fastq_1,fastq_2
+NA12878,0,NA12878,1,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-sarek/igenomes/test-data/NA12878_1.merged.fastq.gz,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-sarek/igenomes/test-data/NA12878_2.merged.fastq.gz

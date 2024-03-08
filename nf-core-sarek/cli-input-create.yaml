@@ -1,0 +1,4 @@
+engine: NEXTFLOW
+name: nf-core-sarek
+main: main.nf
+parameter-template: file://parameter.template.json
