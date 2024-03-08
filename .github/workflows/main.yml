@@ -1,0 +1,23 @@
+name: Deploy Workflow Zip to S3
+on:
+  push:
+    branches:
+      - main
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+          - uses: montudor/action-zip@v1
+            with:
+                args: zip -qq -r nf-core-sarek.zip nf-core-sarek
+          - name: configure aws credentials
+            uses: aws-actions/configure-aws-credentials@v2
+            with:
+                role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/${{ secrets.ROLE_NAME }} 
+                role-session-name: ${{ inputs.role-session }}
+                aws-region: ${{ secrets.AWS_REGION }}
+          - name: Deploy to S3
+            run: aws s3 cp nf-core-sarek.zip s3://${{ secrets.BUCKET }}/
+            
