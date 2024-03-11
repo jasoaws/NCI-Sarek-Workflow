@@ -22,7 +22,7 @@ Resources:
       SourceConnection:
           ConnectionParameters: 
               CodeStar: 
-                  ArtifactPath: finops_cfn.yaml
+                  ArtifactPath: extras/finops_cfn.yaml
                   Branch: arpaExample
                   ConnectionArn: !Ref pConnectionArn
                   Repository: jasoaws/NCI-Sarek-Workflow
@@ -42,7 +42,7 @@ Resources:
       SourceConnection:
           ConnectionParameters: 
               CodeStar: 
-                  ArtifactPath: workflow_cfn.yaml
+                  ArtifactPath: extras/workflow_cfn.yaml
                   Branch: arpaExample
                   ConnectionArn: !Ref pConnectionArn
                   Repository: jasoaws/NCI-Sarek-Workflow
