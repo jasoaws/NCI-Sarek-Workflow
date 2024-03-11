@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudFormation to deploy the collaboration environment
+
+Parameters:
+  pConnectionArn:
+    Type: String
+    Description: The code star connection arn
+    Default: "arn:aws:codestar-connections:us-east-1:905418411195:connection/4f63b4d1-3de5-4d85-90a6-a465347969a1"
+  pPortfolioId:
+    Type: String
+    Description: The name of the portfolio
+    Default: "Arpa-h Portfolio"
+
+Resources:
+  FinOpsProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: "FinOpsProduct"
+      Owner: "arpah"
+      Description: "Arpa-h FinOps Solution"
+      SourceConnection:
+          ConnectionParameters: 
+              CodeStar: 
+                  ArtifactPath: finops_cfn.yaml
+                  Branch: main
+                  ConnectionArn: !Ref pConnectionArn
+                  Repository: jasoaws/NCI-Sarek-Workflow
+          Type: CODESTAR
+      Tags:
+        - Key: "Name"
+          Value: "FinOpsProduct"
+        - Key: "Version"
+          Value: "1.0"
+
+  WorkflowProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: "WorkflowProduct"
+      Owner: "arpah"
+      Description: "Arpa-h Parallel Cluster Solution"
+      SourceConnection:
+          ConnectionParameters: 
+              CodeStar: 
+                  ArtifactPath: workflow_cfn.yaml
+                  Branch: main
+                  ConnectionArn: !Ref pConnectionArn
+                  Repository: jasoaws/NCI-Sarek-Workflow
+          Type: CODESTAR
+      Tags:
+        - Key: "Name"
+          Value: "WorkflowProduct"
+        - Key: "Version"
+          Value: "1.0"
+
+  WorkflowProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      AcceptLanguage: "en"
+      PortfolioId: !Ref pPortfolioId
+      ProductId: !Ref WorkflowProduct
+  FinopsProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      AcceptLanguage: "en"
+      PortfolioId: !Ref pPortfolioId
+      ProductId: !Ref FinOpsProduct
