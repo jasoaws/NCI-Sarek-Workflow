@@ -42,7 +42,7 @@ Resources:
           ConnectionParameters: 
               CodeStar: 
                   ArtifactPath: extras/collaboration.yaml
-                  Branch: main
+                  Branch: arpaExample
                   ConnectionArn: !Ref ConnectionArn
                   Repository: jasoaws/NCI-Sarek-Workflow
           Type: CODESTAR
