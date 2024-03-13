@@ -52,6 +52,26 @@ Resources:
           Value: "WorkflowProduct"
         - Key: "Version"
           Value: "1.0"
+    
+  NewProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: "NewProduct"
+      Owner: "arpah"
+      Description: "Arpa-h New Solution"
+      SourceConnection:
+          ConnectionParameters: 
+              CodeStar: 
+                  ArtifactPath: extras/new_product.yaml
+                  Branch: arpaExample
+                  ConnectionArn: !Ref pConnectionArn
+                  Repository: jasoaws/NCI-Sarek-Workflow
+          Type: CODESTAR
+      Tags:
+        - Key: "Name"
+          Value: "NewProduct"
+        - Key: "Version"
+          Value: "1.0"
 
   WorkflowProductPortfolioAssociation:
     Type: AWS::ServiceCatalog::PortfolioProductAssociation
@@ -65,3 +85,9 @@ Resources:
       AcceptLanguage: "en"
       PortfolioId: !Ref pPortfolioId
       ProductId: !Ref FinOpsProduct
+  NewProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      AcceptLanguage: "en"
+      PortfolioId: !Ref pPortfolioId
+      ProductId: !Ref NewProduct
