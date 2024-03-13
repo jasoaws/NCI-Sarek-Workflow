@@ -12,4 +12,6 @@ Resources:
         - Key: "Name"
           Value: "FinOpsBucket"
         - Key: "Version"
-          Value: "1.0"
+          Value: "2.0"
+        - Key: "Owner"
+          Value: "arpah"
